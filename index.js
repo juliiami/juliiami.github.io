@@ -137,4 +137,4 @@ function show(el) {
   el.classList.remove("hidden");
 }
 
-//initialize();
+initialize();
