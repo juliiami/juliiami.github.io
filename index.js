@@ -63,9 +63,11 @@ async function predict() {
       .div(offset)
       .expandDims();
 	prediction = await model.predict(normalized).data();
-
-	predResult.innerHTML = "drawings: " + prediction[0].toFixed(3) +";"+
-	" clipart: " + prediction[1].toFixed(3) + ";" + " photo: " + prediction[2].toFixed(3);
+	
+	predResult.innerHTML = "drawings: " + prediction[0] +";"+
+	" clipart: " + prediction[1] + ";" + " photo: " + prediction[2];
+	//predResult.innerHTML = "drawings: " + prediction[0].toFixed(3) +";"+
+	//" clipart: " + prediction[1].toFixed(3) + ";" + " photo: " + prediction[2].toFixed(3);
 	
   show(predResult)
 
