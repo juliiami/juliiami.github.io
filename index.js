@@ -45,7 +45,7 @@ var model = undefined;
 
 
 async function initialize() {
-    model = await tf.loadLayersModel('/model_3_epochs/model.json');
+    model = await tf.loadLayersModel('/model3/model.json');
 }
 
 async function predict() {
