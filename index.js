@@ -45,7 +45,7 @@ var model = undefined;
 
 
 async function initialize() {
-    model = await tf.loadLayersModel('/model/model.json');
+    model = await tf.loadLayersModel('/model_3_epochs/model.json');
 }
 
 async function predict() {
@@ -54,20 +54,19 @@ async function predict() {
     window.alert("Please select an image before submit.");
     return;
   }
-	let tensorImg = tf.browser.fromPixels(imagePreview).resizeNearestNeighbor([224, 224])
-    .toFloat();
+	let tensorImg = tf.browser.fromPixels(imagePreview)
+	.resizeNearestNeighbor([224, 224])
+	.toFloat();
 	
 	const offset = tf.scalar(127.5);
 	// Normalize the image from [0, 255] to [-1, 1].
 	const normalized = tensorImg.sub(offset)
-      .div(offset)
-      .expandDims();
+      	   .div(offset)
+	  //.resizeNearestNeighbor([224, 224])
+           .expandDims();
 	prediction = await model.predict(normalized).data();
-	
-	predResult.innerHTML = "drawings: " + prediction[0] +";"+
-	" clipart: " + prediction[1] + ";" + " photo: " + prediction[2];
-	//predResult.innerHTML = "drawings: " + prediction[0].toFixed(3) +";"+
-	//" clipart: " + prediction[1].toFixed(3) + ";" + " photo: " + prediction[2].toFixed(3);
+
+	predResult.innerHTML = "drawings: " + prediction[0].toFixed(3) +";"+" clipart: " + prediction[1].toFixed(3) + ";" + " photo: " + prediction[2].toFixed(3);
 	
   show(predResult)
 
