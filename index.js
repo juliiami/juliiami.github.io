@@ -43,6 +43,7 @@ var model = undefined;
 // Main button events
 //========================================================================
 
+tf.ENV.set("WEBGL_PACK", false);
 
 async function initialize() {
     model = await tf.loadLayersModel('/model/model.json');
