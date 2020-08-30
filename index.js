@@ -1,9 +1,11 @@
+//tf.ENV.set("WEBGL_PACK", false);
+tf.setBackend('cpu');
+console.log(tf.getBackend());
+
 const CLASSES = {
 0: 'drawings',
 1: 'clipart',
 2: 'photo' };
-
-tf.ENV.set("WEBGL_PACK", false);
 
 let model;
 async function loadModel() {
