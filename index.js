@@ -12,7 +12,7 @@ async function loadModel() {
 	load_button = document.getElementById("load-button");
 	loader.style.display = "block";
 	model = undefined;
-	model = await tf.loadLayersModel('./model/model.json');
+	model = await tf.loadLayersModel('./model1/model.json');
 	loader.style.display = "none";
 	load_button.disabled = true;
 	load_button.innerHTML = "Loaded Model";
