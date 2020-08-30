@@ -56,7 +56,7 @@ async function predict() {
     return;
   }
 	let tensorImg = tf.browser.fromPixels(imagePreview)
-	.resizeNearestNeighbor([224, 224])
+	.resizeBilinear([224, 224])
 	.toFloat();
 	
 	const offset = tf.scalar(127.5);
