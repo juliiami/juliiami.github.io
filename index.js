@@ -1,135 +1,96 @@
-//========================================================================
-// Drag and drop image handling
-//========================================================================
-
-var fileDrag = document.getElementById("file-drag");
-var fileSelect = document.getElementById("file-upload");
-
-// Add event listeners
-fileDrag.addEventListener("dragover", fileDragHover, false);
-fileDrag.addEventListener("dragleave", fileDragHover, false);
-fileDrag.addEventListener("drop", fileSelectHandler, false);
-fileSelect.addEventListener("change", fileSelectHandler, false);
-
-function fileDragHover(e) {
-  // prevent default behaviour
-  e.preventDefault();
-  e.stopPropagation();
-
-  fileDrag.className = e.type === "dragover" ? "upload-box dragover" : "upload-box";
-}
-
-function fileSelectHandler(e) {
-  // handle file selecting
-  var files = e.target.files || e.dataTransfer.files;
-  fileDragHover(e);
-  for (var i = 0, f; (f = files[i]); i++) {
-    previewFile(f);
-  }
-}
-
-//========================================================================
-// Web page elements for functions to use
-//========================================================================
-
-var imagePreview = document.getElementById("image-preview");
-var imageDisplay = document.getElementById("image-display");
-var uploadCaption = document.getElementById("upload-caption");
-var predResult = document.getElementById("pred-result2");
-var loader = document.getElementById("loader");
-var model = undefined;
-
-//========================================================================
-// Main button events
-//========================================================================
+const CLASSES = {
+0: 'drawings',
+1: 'clipart',
+2: 'photo' };
 
 tf.ENV.set("WEBGL_PACK", false);
 
-async function initialize() {
-    model = await tf.loadLayersModel('/model/model.json');
+let model;
+async function loadModel() {
+	console.log("model loading..");
+	loader = document.getElementById("progress-box");
+	load_button = document.getElementById("load-button");
+	loader.style.display = "block";
+	model = undefined;
+	model = await tf.loadLayersModel('./model/model.json');
+	loader.style.display = "none";
+	load_button.disabled = true;
+	load_button.innerHTML = "Loaded Model";
+	console.log("model loaded..");
 }
 
-async function predict() {
-  // action for the submit button
-  if (!imageDisplay.src || !imageDisplay.src.startsWith("data")) {
-    window.alert("Please select an image before submit.");
-    return;
-  }
-	let tensorImg = tf.browser.fromPixels(imagePreview)
-	.resizeBilinear([224, 224])
-	.toFloat();
-	
-	const offset = tf.scalar(127.5);
-	// Normalize the image from [0, 255] to [-1, 1].
-	const normalized = tensorImg.sub(offset)
-      .div(offset)
-	  //.resizeNearestNeighbor([224, 224])
-      .expandDims();
-	prediction = await model.predict(normalized).data();
-
-	predResult.innerHTML = "drawings: " + prediction[0].toFixed(3) +";"+" clipart: " + prediction[1].toFixed(3) + ";" + " photo: " + prediction[2].toFixed(3);
-	
-  show(predResult)
-
+async function loadFile() {
+	console.log("image is in loadfile..");
+	document.getElementById("select-file-box").style.display = "table-cell";
+  	document.getElementById("predict-box").style.display = "table-cell";
+  	document.getElementById("prediction").innerHTML = "Click predict to find my label!";
+  	var fileInputElement = document.getElementById("select-file-image");
+  	console.log(fileInputElement.files[0]);
+    renderImage(fileInputElement.files[0]);
 }
 
-function clearImage() {
-  // reset selected files
-  fileSelect.value = "";
-
-  // remove image sources and hide them
-  imagePreview.src = "";
-  imageDisplay.src = "";
-  predResult.innerHTML = "";
-
-  hide(imagePreview);
-  hide(imageDisplay);
-  hide(loader);
-  hide(predResult);
-  show(uploadCaption);
-
-  imageDisplay.classList.remove("loading");
-}
-
-function previewFile(file) {
-  // show the preview of the image
-  var fileName = encodeURI(file.name);
-
+function renderImage(file) {
   var reader = new FileReader();
+  console.log("image is here..");
+  reader.onload = function(event) {
+    img_url = event.target.result;
+    console.log("image is here2..");
+    document.getElementById("test-image").src = img_url;
+  }
   reader.readAsDataURL(file);
-  reader.onloadend = () => {
-    imagePreview.src = URL.createObjectURL(file);
-
-    show(imagePreview);
-    hide(uploadCaption);
-
-    // reset
-    predResult.innerHTML = "";
-    imageDisplay.classList.remove("loading");
-
-    displayImage(reader.result, "image-display");
-  };
 }
 
-//========================================================================
-// Helper functions
-//========================================================================
 
-function displayImage(image, id) {
-  // display image on given id <img> element
-  let display = document.getElementById(id);
-  display.src = image;
-  show(display);
+async function predButton() {
+	console.log("model loading..");
+
+	if (model == undefined) {
+		alert("Please load the model first..")
+	}
+	if (document.getElementById("predict-box").style.display == "none") {
+		alert("Please load an image using 'Upload Image' button..")
+	}
+	console.log(model);
+	let image  = document.getElementById("test-image");
+	let tensor = preprocessImage(image); 
+	
+	console.log(tensor.dataSync());
+	//console.log(tf.browser.fromPixels(image).toFloat().expandDims().dataSync());
+
+	
+	let predictions = await model.predict(tensor).data();
+	let results = Array.from(predictions)
+		.map(function (p, i) {
+			return {
+				probability: p,
+				className: CLASSES[i]
+			};
+		}).sort(function (a, b) {
+			return b.probability - a.probability;
+		}).slice(0, 3);
+
+	document.getElementById("predict-box").style.display = "block";
+	document.getElementById("prediction").innerHTML = "Prediction <br><b>" + results[0].className + "</b>";
+
+	var ul = document.getElementById("predict-list");
+	ul.innerHTML = "";
+	results.forEach(function (p) {
+		console.log(p.className + " " + p.probability.toFixed(6));
+		var li = document.createElement("LI");
+		li.innerHTML = p.className + " " + p.probability.toFixed(6);
+		ul.appendChild(li);
+	});
+
 }
 
-function hide(el) {
-  // hide an element
-  el.classList.add("hidden");
+function preprocessImage(image) {
+	let tensor = tf.browser.fromPixels(image).toFloat();
+
+	let offset = tf.scalar(127.5);
+	return tensor.sub(offset)
+			.div(offset)
+			.resizeBilinear([224, 224])
+			.expandDims();
 }
 
-function show(el) {
-  // show an element
-  el.classList.remove("hidden");
-}
 
-initialize();
