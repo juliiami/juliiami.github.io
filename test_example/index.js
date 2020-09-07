@@ -1,6 +1,6 @@
 //tf.ENV.set("WEBGL_PACK", false);
-//tf.setBackend('cpu');
-//console.log(tf.getBackend());
+tf.setBackend('cpu');
+console.log(tf.getBackend());
 
 const CLASSES = {
 0: 'drawings',
@@ -39,11 +39,13 @@ imageURLs.push("./test/216.png");
 imageURLs.push("./test/426.png");
 imageURLs.push("./test/837.png");
 imageURLs.push("./test/1056.png");
-imageURLs.push("./test/2970.png");
+//imageURLs.push("./test/2970.png");
 imageURLs.push("./test/7261.png");
 imageURLs.push("./test/12652.png");
-imageURLs.push("./test/13694.png");
+//imageURLs.push("./test/13694.png");
 imageURLs.push("./test/25379.png"); 
+imageURLs.push("./test/49336.png"); 
+imageURLs.push("./test/51114.png"); 
 
 // the loaded images will be placed in imgs[]
 var imgs=[];
