@@ -29,7 +29,7 @@ async function loadModel() {
 
 // put the paths to your images in imageURLs[]
 var imageURLs=[];  
-imageURLs.push("./test/95.png");
+/*imageURLs.push("./test/95.png");
 imageURLs.push("./test/96.png");
 imageURLs.push("./test/97.png");
 imageURLs.push("./test/98.png");
@@ -41,7 +41,7 @@ imageURLs.push("./test/837.png");
 imageURLs.push("./test/1056.png");
 imageURLs.push("./test/2970.png");
 imageURLs.push("./test/7261.png");
-imageURLs.push("./test/12652.png");
+imageURLs.push("./test/12652.png");*/
 imageURLs.push("./test/13694.png");
 imageURLs.push("./test/25379.png"); 
 
