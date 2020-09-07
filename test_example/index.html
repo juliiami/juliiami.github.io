@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>Image type classifier</title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="app.css">
+	<!--script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script-->
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  
+	<script type="text/javascript" src="index.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="mobilenet-demo-container">
+			<h3>Image type classifier</h3>
+			<div class="demo-wrapper">
+				<div>
+					<button id="load-button" class="input-button" onclick="loadModel()">Load Model</button>
+					<div id="progress-box" style="display: none; width: 100% !important;">
+						<img src="loading.gif" id="demo-load" width="100px" />
+						<p style="color: white;">Loading model..</p>
+					</div>
+				</div>
+				<div>
+					<button id="predict-button" class="input-button predict-button" onclick="start()">Predict</button>
+				</div>
+			</div>
+			<div class="demo-output">
+				<div id="items" style = "display: flex; flex-wrap: wrap;"> </div>
+			</div>
+		</div>
+		
+	</div>
+	
+</body>
+</html>
