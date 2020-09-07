@@ -5,7 +5,8 @@ body {
 
 .container {
   width: 100%;
-  height: auto; }
+  height: auto; 
+  display: inline-block;}
 
 .mobilenet-demo-container {
   background-color: #1278cc;
@@ -129,10 +130,12 @@ body {
     font-size: 11px; }
 
 /*# sourceMappingURL=app.css.map */
-figure{
-    display: inline-block;
+
+
+.flex-parent {
+     display: flex;
 }
 
-.images_display {
-  display: inline-block;
+.thumbnail{
+	display: block;
 }
