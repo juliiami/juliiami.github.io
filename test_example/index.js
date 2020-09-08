@@ -83,16 +83,20 @@ async function start(){
 	//	preds.push(pred(imgs[i]));
 	//}
 	console.log(preds)
-
+	
+	var table_data = [];
 	var items = [];
 	
 	for (var i=0; i<imageURLs.length; i++) {
+		table_data.push(" <p> " + imageURLs[i] + "\t" + preds[i] + " </p> ");
 		items.push("<figure><img src='" + imageURLs[i] + "' alt='missing' width='130' height='100' class = 'img-responsive thumbnail'/>" +
 		" <figcaption> " + preds[i] + " </figcaption> </figure>");
 		
 		/*items.push("<img src='" + imageURLs[i] + "' alt='missing' width='130' height='100' class = 'img-responsive thumbnail'/> " +"\n" + "<p> " + preds[i] + " </p>");*/
 	}
 	
+	$('#table_data').append(table_data.join(' '));
+
 	$('#items').append(items.join('\n'));
 }
 
@@ -151,8 +155,5 @@ async function pred(image) {
 		//ul.appendChild(li);
 	});
 	
-	return results[0].className + " " + results[0].probability.toFixed(4);
+	return results[0].className + "\t" + results[0].probability.toFixed(4);
 }
-
-
-
