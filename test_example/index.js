@@ -88,7 +88,7 @@ async function start(){
 	var items = [];
 	
 	for (var i=0; i<imageURLs.length; i++) {
-		table_data.push(" <p> " + imageURLs[i] + "\t" + preds[i] + " </p> ");
+		table_data.push(" <span> " + imageURLs[i] + "\t" + preds[i] + "<br> </span>");
 		items.push("<figure><img src='" + imageURLs[i] + "' alt='missing' width='130' height='100' class = 'img-responsive thumbnail'/>" +
 		" <figcaption> " + preds[i] + " </figcaption> </figure>");
 		
