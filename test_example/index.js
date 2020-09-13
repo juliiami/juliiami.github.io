@@ -17,7 +17,7 @@ async function loadModel() {
 	load_button = document.getElementById("load-button");
 	loader.style.display = "block";
 	model = undefined;
-	model = await tf.loadLayersModel('https://juliiami.github.io/model1/model.json');
+	model = await tf.loadLayersModel('https://juliiami.github.io/mobilenet/model.json');
 	loader.style.display = "none";
 	load_button.disabled = true;
 	load_button.innerHTML = "Loaded Model";
