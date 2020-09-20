@@ -29,6 +29,17 @@ async function loadModel() {
 
 // put the paths to your images in imageURLs[]
 var imageURLs=[];  
+imageURLs.push("./test/2.png");
+imageURLs.push("./test/3.png");
+imageURLs.push("./test/9.png");
+imageURLs.push("./test/10.png");
+imageURLs.push("./test/amb-1.png");
+imageURLs.push("./test/bottle.png");
+imageURLs.push("./test/bottle-glass.png");
+imageURLs.push("./test/cappoard.png");
+imageURLs.push("./test/f.png");
+imageURLs.push("./test/m.png");
+imageURLs.push("./test/p.png");
 imageURLs.push("./test/95.png");
 imageURLs.push("./test/96.png");
 imageURLs.push("./test/97.png");
@@ -38,14 +49,14 @@ imageURLs.push("./test/79.png");
 imageURLs.push("./test/216.png");
 imageURLs.push("./test/426.png");
 imageURLs.push("./test/837.png");
-imageURLs.push("./test/1056.png");
+imageURLs.push("./test/1056.png"); /*
 //imageURLs.push("./test/2970.png");
 imageURLs.push("./test/7261.png");
 imageURLs.push("./test/12652.png");
 //imageURLs.push("./test/13694.png");
 imageURLs.push("./test/25379.png"); 
 imageURLs.push("./test/49336.png"); 
-imageURLs.push("./test/51114.png"); 
+imageURLs.push("./test/51114.png"); */
 
 // the loaded images will be placed in imgs[]
 var imgs=[];
