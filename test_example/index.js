@@ -1,6 +1,6 @@
-tf.ENV.set("WEBGL_PACK", false);
-//tf.setBackend('cpu');
-//console.log(tf.getBackend());
+//tf.ENV.set("WEBGL_PACK", false);
+tf.setBackend('cpu');
+console.log(tf.getBackend());
 
 const CLASSES = {
 0: 'drawings',
