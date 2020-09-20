@@ -12,7 +12,7 @@ const CLASSES = {
 
 let model;
 async function loadModel() {
-	tf.ENV.set("WEBGL_PACK", false);
+	//tf.ENV.set("WEBGL_PACK", false);
 	console.log("model loading..");
 	loader = document.getElementById("progress-box");
 	load_button = document.getElementById("load-button");
@@ -86,7 +86,7 @@ async function loadAllImages(){
 
 
 async function start(){
-	tf.ENV.set("WEBGL_PACK", false);
+	//tf.ENV.set("WEBGL_PACK", false);
     // the imgs[] array now holds fully loaded images
     // the imgs[] are in the same order as imageURLs[]
 	
